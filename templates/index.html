@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Phising Site Detection</title>
+  </head>
+
+  <body class="bg-gray-900 flex justify-center items-center h-screen">
+    <div class="text-white bg-gray-800 rounded-lg p-8 shadow-md">
+      <h3>Enter URL</h3>
+      <form action="/url" method="post" class="mt-4 p-4 flex flex-col gap-4">
+        <input type="text" name="url" placeholder="Enter url" class="bg-gray-700 text-white p-2 rounded">
+        <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      </form>
+    </div>
+  </body>
+</html>
