@@ -1,14 +1,14 @@
 import os
 
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
+from flask_lambda import FlaskLambda
 
 import tensorflow as tf
 import pickle
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-
-app = Flask(__name__)
+app = FlaskLambda(__name__)
 max_len = 104
 
 model = tf.keras.models.load_model("phishing_model.h5")
@@ -24,7 +24,7 @@ def index():
 def prediction():
     url = request.form["url"]
     url_sequence = loaded_tokenizer.texts_to_sequences([url])
-    url_padded = pad_sequences(url_sequence, maxlen=max_len,padding="post")
+    url_padded = pad_sequences(url_sequence, maxlen=max_len, padding="post")
     prediction = model.predict(url_padded)
 
     value = prediction.round()
@@ -34,7 +34,7 @@ def prediction():
     else:
         prediction = "Phising"
 
-    return render_template('index.html',prediction=prediction)
+    return render_template('index.html', prediction=prediction)
 
 if __name__ == "__main__":
     app.run()
