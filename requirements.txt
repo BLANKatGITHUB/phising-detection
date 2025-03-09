@@ -7,4 +7,3 @@ flask
 
 # ML
 tensorflow
-pickle

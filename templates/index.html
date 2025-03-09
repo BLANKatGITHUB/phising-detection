@@ -14,6 +14,9 @@
         <input type="text" name="url" placeholder="Enter url" class="bg-gray-700 text-white p-2 rounded">
         <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       </form>
+      {% if prediction %}
+        <h2> The URL is {{prediction}}</h2>
+      {% endif %}
     </div>
   </body>
 </html>

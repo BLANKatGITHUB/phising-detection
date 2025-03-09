@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template,request
 
 import tensorflow as tf
+import pickle
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
@@ -23,10 +24,17 @@ def index():
 def prediction():
     url = request.form["url"]
     url_sequence = loaded_tokenizer.texts_to_sequences([url])
-    url_padded = pad_sequences(url_sequence, maxlen=max_len)
+    url_padded = pad_sequences(url_sequence, maxlen=max_len,padding="post")
     prediction = model.predict(url_padded)
 
-    return f"url recevived {prediction}"
+    value = prediction.round()
+
+    if value == 1:
+        prediction = "Legitmate"
+    else:
+        prediction = "Phising"
+
+    return render_template('index.html',prediction=prediction)
 
 def main():
     app.run(port=int(os.environ.get('PORT', 80)))
