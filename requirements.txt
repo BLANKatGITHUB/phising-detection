@@ -4,5 +4,5 @@ autopep8
 
 # App
 flask
-sklearn
+scikit-learn
 gunicorn
