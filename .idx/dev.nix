@@ -25,6 +25,7 @@
           command = [ "./devserver.sh" ];
           env = { PORT = "$PORT"; };
           manager = "web";
+          
         };
       };
     };

@@ -2,19 +2,52 @@ import os
 
 from flask import Flask, render_template,request
 
-import tensorflow as tf
+
 import pickle
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+
 
 
 app = Flask(__name__)
-max_len = 104
 
-model = tf.keras.models.load_model("phishing_model.h5")
-# Load the tokenizer
-with open('tokenizer.pickle', 'rb') as handle:
-    loaded_tokenizer = pickle.load(handle)
+filename = 'lr_model.pkl'
+with open(filename, 'rb') as file:
+    loaded_model = pickle.load(file)
+
+
+def preprocessing(url):
+    url_length = len(url)
+    dot_count = url.count(".")
+    slash_count = url.count("/")
+    dash_count = url.count("-")
+    underscore_count = url.count("_")
+    at_count = url.count("@")
+    question_count = url.count("?")
+    equal_count = url.count("=")
+    and_count = url.count("&")
+    digit_count = sum(c.isdigit() for c in url)
+    letter_count = sum(c.isalpha() for c in url)
+    has_http = int("http" in url)
+    has_https = int("https" in url)
+    has_www = int("www" in url)
+
+    return [
+        url_length,
+        dot_count,
+        slash_count,
+        dash_count,
+        underscore_count,
+        at_count,
+        question_count,
+        equal_count,
+        and_count,
+        digit_count,
+        letter_count,
+        has_http,
+        has_https,
+        has_www,
+    ]
+
 
 @app.route("/")
 def index():
@@ -23,11 +56,9 @@ def index():
 @app.post("/url")
 def prediction():
     url = request.form["url"]
-    url_sequence = loaded_tokenizer.texts_to_sequences([url])
-    url_padded = pad_sequences(url_sequence, maxlen=max_len,padding="post")
-    prediction = model.predict(url_padded)
-
-    value = prediction.round()
+    
+    x = preprocessing(url)
+    value = loaded_model.predict([x])
 
     if value == 1:
         prediction = "Legitmate"

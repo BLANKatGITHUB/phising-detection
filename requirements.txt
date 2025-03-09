@@ -4,6 +4,5 @@ autopep8
 
 # App
 flask
-
-# ML
-tensorflow
+sklearn
+gunicorn
