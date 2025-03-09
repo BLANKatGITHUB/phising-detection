@@ -2,7 +2,18 @@ import os
 
 from flask import Flask, render_template,request
 
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+
 app = Flask(__name__)
+max_len = 104
+
+model = tf.keras.models.load_model("phishing_model.h5")
+# Load the tokenizer
+with open('tokenizer.pickle', 'rb') as handle:
+    loaded_tokenizer = pickle.load(handle)
 
 @app.route("/")
 def index():
@@ -11,7 +22,11 @@ def index():
 @app.post("/url")
 def prediction():
     url = request.form["url"]
-    return f"url recevived {url}"
+    url_sequence = loaded_tokenizer.texts_to_sequences([url])
+    url_padded = pad_sequences(url_sequence, maxlen=max_len)
+    prediction = model.predict(url_padded)
+
+    return f"url recevived {prediction}"
 
 def main():
     app.run(port=int(os.environ.get('PORT', 80)))
