@@ -10,5 +10,6 @@ This project uses ml to predict whether a site is phising or not.
 To run locally 
 - Download the files
 - Go to the project folder
-- Do python main.py or flask --app main run
+- run ``` pip install requirements.txt ```
+- run ``` python main.py ``` or ``` flask --app main run ```
       
