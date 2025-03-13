@@ -1,7 +1,14 @@
-# Flask Web App Starter
+# Phising detection
 
-A Flask starter template as per [these docs](https://flask.palletsprojects.com/en/3.0.x/quickstart/#a-minimal-application).
+This project uses ml to predict whether a site is phising or not.
 
-## Getting Started
+### Tools used 
+- [x] Google project IDX as editor
+- [x] Flask as backend
+- [x] scikit-learn for training of model
 
-Previews should run automatically when starting a workspace.
+To run locally 
+- Download the files
+- Go to the project folder
+- Do python main.py or flask --app main run
+      
