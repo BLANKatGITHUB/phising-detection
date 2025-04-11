@@ -10,7 +10,7 @@ import pickle
 
 app = Flask(__name__)
 
-filename = 'lr_model.pkl'
+filename = './rf_model.pkl'
 with open(filename, 'rb') as file:
     loaded_model = pickle.load(file)
 
