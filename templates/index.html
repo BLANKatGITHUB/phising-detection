@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Phising Site Detection</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Site Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
 
-  <body class="bg-gray-900 flex justify-center items-center h-screen">
-    <div class="text-white bg-gray-800 rounded-lg p-8 shadow-md">
-      <h3>Enter URL</h3>
-      <form action="/url" method="post" class="mt-4 p-4 flex flex-col gap-4">
-        <input type="text" name="url" placeholder="Enter url" class="bg-gray-700 text-white p-2 rounded">
-        <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      </form>
-      {% if prediction %}
-        <h2> The URL is {{prediction}}</h2>
-      {% endif %}
+        .container {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .form-container {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="container bg-gradient-to-r from-blue-100 to-blue-300 p-8 rounded-lg shadow-md w-full max-w-md form-container">
+        <h1 class="text-3xl font-bold text-gray-800 text-center mb-6">Phishing Site Detection</h1>
+        <form action="/url" method="post" class="mb-4">
+            <div class="mb-4">
+                <label for="url" class="block text-lg font-medium text-gray-700 mb-2">Enter URL: <i class="fas fa-link"></i></label>
+                <input type="text" name="url" id="url" required class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="https://example.com">
+            </div>
+            <button type="submit" class="btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline">Submit <i class="fas fa-paper-plane"></i></button>
+        </form>
+        {% if prediction %}
+            <p class="text-lg text-gray-700 mt-4">The URL is: <span class="font-bold">{{ prediction }}</span></p>
+        {% endif %}
     </div>
-  </body>
+</body>
 </html>
